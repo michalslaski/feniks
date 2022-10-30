@@ -2,6 +2,7 @@ defmodule Feniks.Server do
   alias Feniks.LED
   defstruct [:led, :on, :timeout]
   use GenServer
+  require Logger
 
   def new(opts) do
     %__MODULE__{
@@ -17,13 +18,14 @@ defmodule Feniks.Server do
 
   def init(opts) do
     send(self(), :blink)
+    Logger.info("starting pin #{opts[:pin]}")
     {:ok, new(opts)}
   end
 
   def wait(timeout) do
     Process.send_after(self(), :blink, timeout)
   end
-  
+
   def handle_info(:blink, blinker) do
     wait(blinker.timeout)
     {:noreply, blink(blinker)}
@@ -31,10 +33,11 @@ defmodule Feniks.Server do
 
   defp blink(%{on: true} = blinker) do
     LED.on(blinker.led)
-    %{blinker| on: false}
+    %{blinker | on: false}
   end
+
   defp blink(%{on: false} = blinker) do
     LED.off(blinker.led)
-    %{blinker| on: true}
+    %{blinker | on: true}
   end
 end

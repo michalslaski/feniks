@@ -9,7 +9,7 @@ defmodule Feniks.DynamicSupervisor do
   def start_child(opts) do
     DynamicSupervisor.start_child(__MODULE__, {Feniks.Server, opts})
   end
-  
+
   @impl true
   def init(_init_arg) do
     DynamicSupervisor.init(strategy: :one_for_one)

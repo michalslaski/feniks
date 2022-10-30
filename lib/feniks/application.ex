@@ -14,12 +14,13 @@ defmodule Feniks.Application do
 
   @impl true
   def start(_type, _args) do
-    {:ok, _pid} = Feniks.DynamicSupervisor.start_link()
-    Feniks.DynamicSupervisor.start_child([pin: @pin1, timeout: 1000])
-    Feniks.DynamicSupervisor.start_child([pin: @pin2, timeout: 800])
-    Feniks.DynamicSupervisor.start_child([pin: @pin3, timeout: 600])
-    Feniks.DynamicSupervisor.start_child([pin: @pin4, timeout: 500])
-    Feniks.DynamicSupervisor.start_child([pin: @pin5, timeout: 1200])
-    Feniks.DynamicSupervisor.start_child([pin: @pin6, timeout: 700])
+    {:ok, _pid} = Feniks.Supervisor.start_link()
+    # {:ok, _pid} = Feniks.DynamicSupervisor.start_link()
+    # Feniks.DynamicSupervisor.start_child([pin: @pin1, timeout: 1000])
+    # Feniks.DynamicSupervisor.start_child([pin: @pin2, timeout: 800])
+    # Feniks.DynamicSupervisor.start_child([pin: @pin3, timeout: 600])
+    # Feniks.DynamicSupervisor.start_child([pin: @pin4, timeout: 500])
+    # Feniks.DynamicSupervisor.start_child([pin: @pin5, timeout: 1200])
+    # Feniks.DynamicSupervisor.start_child([pin: @pin6, timeout: 700])
   end
 end

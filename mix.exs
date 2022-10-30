@@ -65,8 +65,13 @@ defmodule Feniks.MixProject do
       # See https://hexdocs.pm/nerves_pack/readme.html#erlang-distribution
       cookie: "#{@app}_cookie",
       include_erts: &Nerves.Release.erts/0,
-      steps: [&Nerves.Release.init/1, :assemble],
+      steps: [&Nerves.Release.init/1, :assemble, &copy_priv_files/1],
       strip_beams: Mix.env() == :prod or [keep: ["Docs"]]
     ]
+  end
+
+  defp copy_priv_files(release) do
+    File.cp_r("lib/feniks/priv/static", release.path <> "/static")
+    release
   end
 end
