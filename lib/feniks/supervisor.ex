@@ -8,6 +8,7 @@ defmodule Feniks.Supervisor do
   @impl true
   def init(:ok) do
     children = [
+      %{id: Button, start: {Feniks.Button, :start_link, []}},
       %{id: PIR, start: {Feniks.PIR, :start_link, []}},
       %{id: DynamicSupervisor, start: {Feniks.DynamicSupervisor, :start_link, []}}
     ]
